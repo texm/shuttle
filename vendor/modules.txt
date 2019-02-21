@@ -1,0 +1,9 @@
+# github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20190122035005-cf0caa702764
+github.com/RocketChat/Rocket.Chat.Go.SDK/models
+github.com/RocketChat/Rocket.Chat.Go.SDK/rest
+# github.com/jroimartin/gocui v0.4.0
+github.com/jroimartin/gocui
+# github.com/mattn/go-runewidth v0.0.4
+github.com/mattn/go-runewidth
+# github.com/nsf/termbox-go v0.0.0-20190121233118-02980233997d
+github.com/nsf/termbox-go
