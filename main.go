@@ -1,13 +1,14 @@
 package main
 
-import (
-	//"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
-	//"github.com/RocketChat/Rocket.Chat.Go.SDK/rest"
-	//"github.com/RocketChat/Rocket.Chat.Go.SDK/realtime"
-
-	//"github.com/marcusolsson/tui-go"
-)
+import "flag"
 
 func main() {
-	// 
+	noUIptr := flag.Bool("noui", false, "use UI or command")
+	flag.Parse()
+
+	if (*noUIptr) {
+		cmd_main()
+	} else {
+		ui_main()
+	}
 }
