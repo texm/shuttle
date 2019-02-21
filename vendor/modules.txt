@@ -1,9 +1,28 @@
+# github.com/Jeffail/gabs v1.2.0
+github.com/Jeffail/gabs
 # github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20190122035005-cf0caa702764
 github.com/RocketChat/Rocket.Chat.Go.SDK/models
+github.com/RocketChat/Rocket.Chat.Go.SDK/realtime
 github.com/RocketChat/Rocket.Chat.Go.SDK/rest
-# github.com/jroimartin/gocui v0.4.0
-github.com/jroimartin/gocui
-# github.com/mattn/go-runewidth v0.0.4
+# github.com/gdamore/encoding v0.0.0-20151215212835-b23993cbb635
+github.com/gdamore/encoding
+# github.com/gdamore/tcell v1.1.0
+github.com/gdamore/tcell
+github.com/gdamore/tcell/terminfo
+# github.com/gopackage/ddp v0.0.0-20170117053602-652027933df4
+github.com/gopackage/ddp
+# github.com/lucasb-eyer/go-colorful v0.0.0-20180709185858-c7842319cf3a
+github.com/lucasb-eyer/go-colorful
+# github.com/marcusolsson/tui-go v0.4.0
+github.com/marcusolsson/tui-go
+github.com/marcusolsson/tui-go/wordwrap
+# github.com/mattn/go-runewidth v0.0.3
 github.com/mattn/go-runewidth
-# github.com/nsf/termbox-go v0.0.0-20190121233118-02980233997d
-github.com/nsf/termbox-go
+# github.com/mitchellh/go-wordwrap v1.0.0
+github.com/mitchellh/go-wordwrap
+# golang.org/x/net v0.0.0-20190213061140-3a22650c66bd
+golang.org/x/net/websocket
+# golang.org/x/text v0.3.0
+golang.org/x/text/encoding
+golang.org/x/text/transform
+golang.org/x/text/encoding/internal/identifier
