@@ -7,7 +7,6 @@ import (
 	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
 	"github.com/texm/shuttle/auth"
-	"net/url"
 )
 
 func (b *Bridge) SendMessage(msg string, channel *models.Channel) error {
