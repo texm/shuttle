@@ -53,12 +53,13 @@ func Init() *Bridge {
 
 	credentials, err := auth.ReadSavedCredentials()
 	if err != nil {
-		fmt.Println("failed to read credentials")
+		fmt.Println("No saved credentials")
 		return brg
 	}
+
 	err = brg.Login(credentials)
 	if err != nil {
-		fmt.Printf("failed to login: %s\n", err)
+		fmt.Errorf("failed to login: %s\n", err)
 	}
 
 	return brg

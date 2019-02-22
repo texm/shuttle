@@ -30,6 +30,8 @@ type post struct {
 
 var posts = []post{}
 
+var quited = false
+
 var logo = `
    _____ __  ____  ________________    ______
   / ___// / / / / / /_  __/_  __/ /   / ____/
@@ -39,10 +41,12 @@ var logo = `
 `
 
 func Main(brg *bridge.Bridge) {
-	if brg.IsLoggedIn {
-		ChatUI(brg)
-	} else {
-		LoginUI(brg)
+	for quited == false {
+		if brg.IsLoggedIn {
+			ChatUI(brg)
+		} else {
+			LoginUI(brg)
+		}
 	}
 }
 
@@ -101,7 +105,10 @@ func LoginUI(brg *bridge.Bridge) {
 	})
 
 	tui.DefaultFocusChain.Set(userId, authToken, loginButton, googleButton)
-	ui.SetKeybinding("Esc", func() { ui.Quit() })
+	ui.SetKeybinding("Esc", func() {
+		ui.Quit()
+		quited = true
+	})
 
 	if err := ui.Run(); err != nil {
 		log.Fatal(err)
@@ -172,7 +179,10 @@ func ChatUI(brg *bridge.Bridge) {
 		log.Fatal(err)
 	}
 
-	ui.SetKeybinding("Esc", func() { ui.Quit() })
+	ui.SetKeybinding("Esc", func() {
+		ui.Quit()
+		quited = true
+	})
 
 	if err := ui.Run(); err != nil {
 		log.Fatal(err)
