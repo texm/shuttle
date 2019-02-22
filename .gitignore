@@ -1,2 +1,4 @@
 .credential
 .*~
+shuttle
+go.sum

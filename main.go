@@ -1,32 +1,22 @@
 package main
 
 import (
-	// "encoding/json"
-	// "fmt"
-	// "github.com/RocketChat/Rocket.Chat.Go.SDK/models"
-	"fmt"
-	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
-	"net/url"
+	"flag"
+
+	"github.com/texm/shuttle/bridge"
+	"github.com/texm/shuttle/cmd"
+	"github.com/texm/shuttle/ui"
 )
 
 func main() {
-	//
-	client := rest.NewClient(&url.URL{Host: "chat.tools.flnltd.com:80"}, false)
-	AppLogin(client)
-	// credential := models.UserCredentials{}
+	noUIptr := flag.Bool("noui", false, "use UI or command")
+	flag.Parse()
 
-	// se, _ := json.Marshal(models.UserCredentials{ID: "abc", Token: "kkk", Email: "mail"})
-	// fmt.Println(se)
-	// fmt.Println(string(se))
-	// dat := models.UserCredentials{}
-	// json.Unmarshal(se, &dat)
-	// fmt.Println(dat)
+	brigeObj := bridge.Init()
 
-	// client.LoginViaGoogle(&credential)
-	// fmt.Println(credential)
-	res, err := client.GetPublicChannels()
-	if err != nil {
-		fmt.Println(err)
+	if *noUIptr {
+		cmd.Main(brigeObj)
+	} else {
+		ui.Main()
 	}
-	fmt.Println(res)
 }

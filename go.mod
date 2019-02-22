@@ -1,4 +1,4 @@
-module shuttle
+module github.com/texm/shuttle
 
 require (
 	github.com/Jeffail/gabs v1.2.0 // indirect
