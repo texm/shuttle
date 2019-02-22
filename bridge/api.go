@@ -34,7 +34,7 @@ func (b *Bridge) Search(params url.Values) (*models.Spotlight, error) {
 	return b.Client.GetSpotlight(params)
 }
 
-func (b *Bridge) AppLogin(c *rest.Client) error {
+func (b *Bridge) Login(c *rest.Client) error {
 	credential, _ := auth.ReadSavedCredential()
 	_ = c.LoginViaGoogle(&credential)
 	auth.SaveCredential(&credential)
