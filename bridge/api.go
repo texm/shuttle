@@ -5,10 +5,6 @@ import (
 	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
 	"github.com/texm/shuttle/auth"
 	"net/url"
-	"os"
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 )
 
 func (b *Bridge) SendMessage(msg string, channel *models.Channel) error {

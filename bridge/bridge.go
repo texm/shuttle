@@ -17,7 +17,7 @@ type Bridge struct {
 func Init() *Bridge {
 	brg := &Bridge{}
 
-	url, err := url.Parse("https://chat.tools.flnltd.com")
+	url, err := url.Parse("https://chat.tools-stg.flnltd.com")
 	if err != nil {
 		log.Fatalf("bad server url: %s", err)
 	}

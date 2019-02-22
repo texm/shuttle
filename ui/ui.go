@@ -179,10 +179,16 @@ func ChatUI(brg *bridge.Bridge) {
 		input.SetText("")
 	})
 
-	tui.DefaultFocusChain.Set(userId, authToken, loginButton, googleButton)
+	root := tui.NewHBox(sidebarBox, chat)
+
+	ui, err := tui.New(root)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	ui.SetKeybinding("Esc", func() { ui.Quit() })
 
 	if err := ui.Run(); err != nil {
 		log.Fatal(err)
-	}
+}
 }
