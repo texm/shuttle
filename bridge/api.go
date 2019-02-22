@@ -85,15 +85,23 @@ func (b *Bridge) SetCurChannel(c models.Channel) error {
 	return nil
 }
 
-func (b *Bridge) setCurInput(s string) error {
+func (b *Bridge) SetCurInput(s string) error {
 	b.uiState.CurInput = s
 	return nil
 }
 
-func (b *Bridge) getCurChannel() models.Channel {
+func (b *Bridge) GetCurChannel() models.Channel {
 	return b.uiState.CurChannel
 }
 
-func (b *Bridge) getPaneState() PaneState {
+func (b *Bridge) GetPaneState() PaneState {
 	return b.uiState.CurViewPanel
+}
+
+func (b *Bridge) GetUserInfo() (*UserInfoStruct, error) {
+	res := new(UserInfoStruct)
+	params := url.Values{}
+	err := b.Client.Get("me", params, res)
+
+	return res, err
 }

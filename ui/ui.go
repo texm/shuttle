@@ -47,7 +47,6 @@ func Main(brg *bridge.Bridge) {
 }
 
 func LoginUI(brg *bridge.Bridge) {
-
 	authToken := tui.NewEntry()
 
 	userId := tui.NewEntry()
@@ -109,7 +108,14 @@ func LoginUI(brg *bridge.Bridge) {
 }
 
 func ChatUI(brg *bridge.Bridge) {
-	// SET UP SIDEBAR
+	state := brg.GetInterfaceState()
+
+	t := tui.NewTheme()
+	normal := tui.Style{Bg: tui.ColorWhite, Fg: tui.ColorBlack}
+	t.SetStyle("normal", normal)
+	inverse := tui.Style{Bg: tui.ColorBlack, Fg: tui.ColorWhite}
+	t.SetStyle("inverse", inverse)
+
 	channelsResponse, err := brg.GetJoinedChannels(url.Values{})
 
 	sidebar := tui.NewVBox()
@@ -117,7 +123,11 @@ func ChatUI(brg *bridge.Bridge) {
 
 	if err == nil {
 		for _, c := range channelsResponse.Channels {
-			sidebar.Append(tui.NewHBox(tui.NewLabel(c.Name)))
+			prefix := ""
+			if state.CurChannel.Name == c.Name {
+				prefix = ">"
+			}
+			sidebar.Append(tui.NewHBox(tui.NewLabel(prefix + c.Name)))
 		}
 	} else {
 		fmt.Println(err)
@@ -158,10 +168,11 @@ func ChatUI(brg *bridge.Bridge) {
 	input.OnSubmit(func(e *tui.Entry) {
 		history.Append(tui.NewHBox(
 			tui.NewLabel(time.Now().Format("15:04")),
-			tui.NewPadder(1, 0, tui.NewLabel(fmt.Sprintf("<%s>", "Putin"))),
+			tui.NewPadder(1, 0, tui.NewLabel(fmt.Sprintf("<%s>", brg.User.UserName))),
 			tui.NewLabel(e.Text()),
 			tui.NewSpacer(),
 		))
+		brg.SendMessage(e.Text(), &state.CurChannel)
 		input.SetText("")
 	})
 

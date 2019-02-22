@@ -32,9 +32,18 @@ type Bridge struct {
 	IsLoggedIn     bool
 	uiState        InterfaceState
 	ServerURL      url.URL
-	IsLoggedIn     bool
-	Client         *rest.Client
 	RealtimeClient *realtime.Client
+	User 		   *UserInfoStruct
+}
+
+type UserInfoStruct struct {
+	Name string `json:"name"`
+	UserName string `json:"username"`
+	ID string `json:"_id"`
+}
+
+func (o UserInfoStruct) OK() error {
+	return nil
 }
 
 func Init() *Bridge {
@@ -61,7 +70,33 @@ func Init() *Bridge {
 	err = brg.Login(credentials)
 	if err != nil {
 		fmt.Printf("failed to login: %s\n", err)
+	} else {
+		res, _ := brg.GetUserInfo()
+		brg.User = res
 	}
 
 	return brg
+}
+
+func (b *Bridge) GetInterfaceState() *InterfaceState {
+	chanResponse, err := b.GetJoinedChannels(url.Values{})
+	if (err != nil) {
+		fmt.Println(err)
+	}
+	var channel models.Channel
+
+	for i := 0; i < len(chanResponse.Channels); i++ {
+		if (chanResponse.Channels[i].Name == "shuttle-test") {
+			channel = chanResponse.Channels[i]
+			break
+		}
+	}
+
+	if channel.Name == "" {
+		channel = chanResponse.Channels[0]
+	}
+
+	state := &InterfaceState{CurInput: "", CurChannel: channel, CurViewPanel: INPUT_PANE}
+
+	return state
 }
