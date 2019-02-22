@@ -1,17 +1,33 @@
 package bridge
 
 import (
+	"fmt"
 	"log"
 	"net/url"
-	"fmt"
 
-	"github.com/texm/shuttle/auth"
+	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
+	"github.com/texm/shuttle/auth"
 )
 
+type PaneState int
+
+const (
+	MESSAGE_PANE PaneState = 0
+	INPUT_PANE   PaneState = 1
+	CHANNEL_PANE PaneState = 2
+)
+
+type InterfaceState struct {
+	CurViewPanel PaneState
+	CurChannel   models.Channel
+	CurInput     string
+}
+
 type Bridge struct {
-	Client *rest.Client
+	Client     *rest.Client
 	IsLoggedIn bool
+	uiState    InterfaceState
 }
 
 func Init() *Bridge {
@@ -24,13 +40,13 @@ func Init() *Bridge {
 	brg.Client = rest.NewClient(url, false)
 
 	credentials, err := auth.ReadSavedCredentials()
-	if (err != nil) {
+	if err != nil {
 		fmt.Println("failed to read credentials")
 		return brg
 	}
 
 	err = brg.Login(credentials)
-	if (err != nil) {
+	if err != nil {
 		fmt.Println("failed to login")
 	}
 

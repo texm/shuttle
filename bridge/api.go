@@ -36,7 +36,7 @@ func (b *Bridge) Search(params url.Values) (*models.Spotlight, error) {
 
 func (b *Bridge) Login(credentials *models.UserCredentials) error {
 	err := b.Client.Login(credentials)
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
@@ -47,7 +47,7 @@ func (b *Bridge) Login(credentials *models.UserCredentials) error {
 
 func (b *Bridge) LoginWithGoogle() error {
 	credentials, err := auth.RetrieveCredentialsThroughOAuth(b.Client)
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 
@@ -56,4 +56,28 @@ func (b *Bridge) LoginWithGoogle() error {
 
 func (b *Bridge) SetCredentials(userID string, authToken string) error {
 	return nil
+}
+
+func (b *Bridge) SetPaneState(s PaneState) error {
+	// cache
+	b.uiState.CurViewPanel = s
+	return nil
+}
+
+func (b *Bridge) SetCurChannel(c models.Channel) error {
+	b.uiState.CurChannel = c
+	return nil
+}
+
+func (b *Bridge) setCurInput(s string) error {
+	b.uiState.CurInput = s
+	return nil
+}
+
+func (b *Bridge) getCurChannel() models.Channel {
+	return b.uiState.CurChannel
+}
+
+func (b *Bridge) getPaneState() PaneState {
+	return b.uiState.CurViewPanel
 }
