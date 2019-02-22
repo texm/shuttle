@@ -4,7 +4,7 @@ import (
 	"log"
 	"fmt"
 	"time"
-	"net/url"
+	//"net/url"
 
 	//"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/marcusolsson/tui-go"
@@ -29,8 +29,6 @@ type post struct {
 }
 
 var posts = []post{
-	{username: "john", message: "hi, what's up?", time: "14:41"},
-	{username: "jane", message: "not much", time: "14:43"},
 }
 
 var logo = `
@@ -118,12 +116,17 @@ func ChatUI(brg *bridge.Bridge) {
 	// 	models.Channel{Name: "another channel"},
 	// }
 
-	channelsResponse, _ := brg.GetJoinedChannels(url.Values{})
+	channelsResponse, err := brg.GetChannels()
 
 	sidebar := tui.NewVBox()
 	sidebar.Append(tui.NewHBox(tui.NewLabel("CHANNELS")))
-	for _, c := range channelsResponse.Channels {
-		sidebar.Append(tui.NewHBox(tui.NewLabel(c.Name)))
+
+	if err == nil {
+		for _, c := range channelsResponse.Channels {
+			sidebar.Append(tui.NewHBox(tui.NewLabel(c.Name)))
+		}
+	} else {
+		fmt.Println(err)
 	}
 
 	// sidebar := tui.NewVBox(
