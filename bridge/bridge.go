@@ -2,7 +2,7 @@ package bridge
 
 import (
 	"fmt"
-	"io/ioutil"
+	// "io/ioutil"
 	"log"
 	"net/url"
 
@@ -43,7 +43,7 @@ func Init() *Bridge {
 	}
 	brg.Client = rest.NewClient(url, false)
 
-	log.SetOutput(ioutil.Discard)
+	// log.SetOutput(ioutil.Discard)
 	brg.RealtimeClient, err = realtime.NewClient(url, false)
 	if err != nil {
 		log.Fatalf("couldn't make new realtime client: %s", err)

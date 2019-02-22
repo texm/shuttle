@@ -1,10 +1,10 @@
 package ui
 
 import (
-	"log"
 	"fmt"
-	"time"
+	"log"
 	"net/url"
+	"time"
 
 	//"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/marcusolsson/tui-go"
@@ -36,14 +36,13 @@ var posts = []post{
 var logo = `
    _____ __  ____  ________________    ______
   / ___// / / / / / /_  __/_  __/ /   / ____/
-  \__ \/ /_/ / / / / / /   / / / /   / __/   
- ___/ / __  / /_/ / / /   / / / /___/ /___   
-/____/_/ /_/\____/ /_/   /_/ /_____/_____/										
+  \__ \/ /_/ / / / / / /   / / / /   / __/
+ ___/ / __  / /_/ / / /   / / / /___/ /___
+/____/_/ /_/\____/ /_/   /_/ /_____/_____/
 `
 
-
 func Main(brg *bridge.Bridge) {
-	if (brg.IsLoggedIn) {
+	if brg.IsLoggedIn {
 		ChatUI(brg)
 	} else {
 		LoginUI(brg)
@@ -76,7 +75,7 @@ func LoginUI(brg *bridge.Bridge) {
 		tui.NewPadder(1, 1, form),
 		buttons,
 	)
-	
+
 	mainMenu.SetBorder(true)
 
 	wrapper := tui.NewVBox(
@@ -94,7 +93,7 @@ func LoginUI(brg *bridge.Bridge) {
 
 	loginButton.OnActivated(func(b *tui.Button) {
 		err := brg.SetCredentials(userId.Text(), authToken.Text())
-		if (err == nil) {
+		if err == nil {
 			ui.Quit()
 		}
 	})
