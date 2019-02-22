@@ -62,10 +62,12 @@ func LoginUI(brg *bridge.Bridge) {
 	form.AppendRow(userId, authToken)
 
 	loginButton := tui.NewButton("Start Chatting")
+	googleButton := tui.NewButton("Login With Google")
 
 	buttons := tui.NewHBox(
 		tui.NewSpacer(),
 		tui.NewPadder(1, 0, loginButton),
+		tui.NewPadder(2, 0, googleButton),
 	)
 
 	mainMenu := tui.NewVBox(
@@ -102,7 +104,7 @@ func LoginUI(brg *bridge.Bridge) {
 		ui.Quit()
 	})
 
-	tui.DefaultFocusChain.Set(userId, authToken, loginButton)
+	tui.DefaultFocusChain.Set(userId, authToken, loginButton, googleButton)
 	ui.SetKeybinding("Esc", func() { ui.Quit() })
 
 	if err := ui.Run(); err != nil {
@@ -112,7 +114,7 @@ func LoginUI(brg *bridge.Bridge) {
 
 func ChatUI(brg *bridge.Bridge) {
 	// SET UP SIDEBAR
-	channelsResponse, _ := brg.GetJoinedChannels(url.Values{})
+	channelsResponse, err := brg.GetJoinedChannels(url.Values{})
 
 	sidebar := tui.NewVBox()
 	sidebar.Append(tui.NewHBox(tui.NewLabel("CHANNELS")))
