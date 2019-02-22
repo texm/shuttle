@@ -28,10 +28,7 @@ type post struct {
 	time     string
 }
 
-var posts = []post{
-	{username: "john", message: "hi, what's up?", time: "14:41"},
-	{username: "jane", message: "not much", time: "14:43"},
-}
+var posts = []post{}
 
 var logo = `
    _____ __  ____  ________________    ______

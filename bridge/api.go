@@ -41,6 +41,7 @@ func (b *Bridge) Login(credentials *models.UserCredentials) error {
 	if (err != nil) {
 		return err
 	}
+
 	_, err = b.RealtimeClient.Login(credentials)
 	if err != nil {
 		return fmt.Errorf("couldn't login to realtime client: %s", err)

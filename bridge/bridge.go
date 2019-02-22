@@ -28,10 +28,12 @@ func Init() *Bridge {
 	brg.Client = rest.NewClient(url, false)
 
 	log.SetOutput(ioutil.Discard)
+
 	brg.RealtimeClient, err = realtime.NewClient(url, false)
 	if err != nil {
 		log.Fatalf("couldn't make new realtime client: %s", err)
 	}
+
 	credentials, err := auth.ReadSavedCredentials()
 	if err != nil {
 		return brg
