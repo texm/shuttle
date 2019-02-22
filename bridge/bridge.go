@@ -1,8 +1,10 @@
 package bridge
 
 import (
-	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
+	"log"
 	"net/url"
+
+	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
 )
 
 type Bridge struct {
@@ -12,16 +14,16 @@ type Bridge struct {
 func Init() *Bridge {
 	brg := &Bridge{}
 
-	url, err := url.Parse("https://chat.tools-stg.flnltd.com")
+	url, err := url.Parse("https://chat.tools.flnltd.com")
 	if err != nil {
-		// url failed?
+		log.Fatalf("bad server url: %s", err)
 	}
 
 	client := rest.NewClient(url, false)
 	err = brg.Login(client)
 
 	if err != nil {
-		// this should never fail?
+		log.Fatalf("couldn't login: %s", err)
 	}
 
 	brg.Client = client
