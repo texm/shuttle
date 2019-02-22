@@ -32,8 +32,6 @@ type Bridge struct {
 	IsLoggedIn     bool
 	uiState        InterfaceState
 	ServerURL      url.URL
-	IsLoggedIn     bool
-	Client         *rest.Client
 	RealtimeClient *realtime.Client
 	User 		   *UserInfoStruct
 }
