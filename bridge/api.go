@@ -51,6 +51,26 @@ func (b *Bridge) Login(credentials *models.UserCredentials) error {
 	return nil
 }
 
+func (b *Bridge) GetPastMessagesByName(name string, amt int) ([]models.Message, error) {
+	var empty []models.Message
+
+	page := &models.Pagination{}
+	page.Count = amt
+	channelsResponse, err := b.GetChannels()
+	if err != nil {
+		return empty, nil
+	}
+
+	channels := channelsResponse.Channels
+	for i := 0; i < len(channels); i++ {
+		if channels[i].Name == name {
+			return b.Client.GetMessages(&channels[i], page)
+		}
+	}
+
+	return empty, nil
+}
+
 func (b *Bridge) GetPastMessages(channel *models.Channel, amt int) ([]models.Message, error) {
 	page := &models.Pagination{}
 	page.Count = amt
@@ -69,7 +89,7 @@ func (b *Bridge) StreamMessages(channel *models.Channel) (chan models.Message, e
 }
 
 func (b *Bridge) LoginWithGoogle() error {
-	credentials, err := auth.RetrieveCredentialsThroughOAuth("https://chat.tools.flnltd.com", b.Client)
+	credentials, err := auth.RetrieveCredentialsThroughOAuth("https://chat.tools-stg.flnltd.com", b.Client)
 	if err != nil {
 		return err
 	}
