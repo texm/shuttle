@@ -69,7 +69,7 @@ func (b *Bridge) StreamMessages(channel *models.Channel) (chan models.Message, e
 }
 
 func (b *Bridge) LoginWithGoogle() error {
-	credentials, err := auth.RetrieveCredentialsThroughOAuth(b.Client)
+	credentials, err := auth.RetrieveCredentialsThroughOAuth("https://chat.tools.flnltd.com", b.Client)
 	if err != nil {
 		return err
 	}

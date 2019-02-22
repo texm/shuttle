@@ -1,10 +1,10 @@
 package auth
 
 import (
-	"os"
 	"encoding/json"
-	"io/ioutil"
 	"errors"
+	"io/ioutil"
+	"os"
 
 	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
@@ -21,7 +21,7 @@ func ReadSavedCredentials() (*models.UserCredentials, error) {
 
 	json.Unmarshal(data, &credentials)
 
-	if (credentials.ID == "" || credentials.Token == "") {
+	if credentials.ID == "" || credentials.Token == "" {
 		return credentials, errors.New("failed to read tokens")
 	}
 
@@ -38,11 +38,11 @@ func SaveCredentials(credentials *models.UserCredentials) error {
 	return err
 }
 
-func RetrieveCredentialsThroughOAuth(client *rest.Client) (*models.UserCredentials, error) {
+func RetrieveCredentialsThroughOAuth(rcUrl string, client *rest.Client) (*models.UserCredentials, error) {
 	credentials := &models.UserCredentials{}
 
-	err := client.LoginViaGoogle(credentials)
-	if (err != nil) {
+	err := client.LoginViaGoogle(rcUrl, credentials)
+	if err != nil {
 		return credentials, err
 	}
 

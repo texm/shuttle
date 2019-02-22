@@ -3,8 +3,8 @@ package bridge
 import (
 	"fmt"
 	// "io/ioutil"
-	"log"
 	"io/ioutil"
+	"log"
 	"net/url"
 
 	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
@@ -33,13 +33,13 @@ type Bridge struct {
 	uiState        InterfaceState
 	ServerURL      url.URL
 	RealtimeClient *realtime.Client
-	User 		   *UserInfoStruct
+	User           *UserInfoStruct
 }
 
 type UserInfoStruct struct {
-	Name string `json:"name"`
+	Name     string `json:"name"`
 	UserName string `json:"username"`
-	ID string `json:"_id"`
+	ID       string `json:"_id"`
 }
 
 func (o UserInfoStruct) OK() error {
@@ -49,7 +49,7 @@ func (o UserInfoStruct) OK() error {
 func Init() *Bridge {
 	brg := &Bridge{}
 
-	url, err := url.Parse("https://chat.tools-stg.flnltd.com")
+	url, err := url.Parse("https://chat.tools.flnltd.com")
 	if err != nil {
 		log.Fatalf("bad server url: %s", err)
 	}
@@ -80,13 +80,13 @@ func Init() *Bridge {
 
 func (b *Bridge) GetInterfaceState() *InterfaceState {
 	chanResponse, err := b.GetJoinedChannels(url.Values{})
-	if (err != nil) {
+	if err != nil {
 		fmt.Println(err)
 	}
 	var channel models.Channel
 
 	for i := 0; i < len(chanResponse.Channels); i++ {
-		if (chanResponse.Channels[i].Name == "shuttle-test") {
+		if chanResponse.Channels[i].Name == "shuttle-test" {
 			channel = chanResponse.Channels[i]
 			break
 		}
