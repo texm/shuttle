@@ -47,7 +47,6 @@ func (b *Bridge) Login(credentials *models.UserCredentials) error {
 	}
 
 	b.IsLoggedIn = true
-
 	return nil
 }
 
