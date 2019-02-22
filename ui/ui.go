@@ -96,10 +96,8 @@ func LoginUI(brg *bridge.Bridge) {
 	})
 
 	googleButton.OnActivated(func(b *tui.Button) {
-		err := brg.LoginWithGoogle()
-		if (err == nil) {
-			ui.Quit()
-		}
+		_ = brg.LoginWithGoogle()
+		ui.Quit()
 	})
 
 	tui.DefaultFocusChain.Set(userId, authToken, loginButton, googleButton)

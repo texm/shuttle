@@ -19,11 +19,7 @@ func ReadSavedCredentials() (*models.UserCredentials, error) {
 		return credentials, err
 	}
 
-	credData := map[string]string{}
-	json.Unmarshal(data, &credData)
-
-	credentials.ID 	  = credData["id"]
-	credentials.Token = credData["token"]
+	json.Unmarshal(data, &credentials)
 
 	if (credentials.ID == "" || credentials.Token == "") {
 		return credentials, errors.New("failed to read tokens")
@@ -34,7 +30,10 @@ func ReadSavedCredentials() (*models.UserCredentials, error) {
 
 func SaveCredentials(credentials *models.UserCredentials) error {
 	pwd, _ := os.Getwd()
-	se, _ := json.Marshal(credentials)
+
+	data := map[string]string{"ID": credentials.ID, "Token": credentials.Token}
+
+	se, _ := json.Marshal(data)
 	err := ioutil.WriteFile(pwd+"/.credential", se, 0644)
 	return err
 }
