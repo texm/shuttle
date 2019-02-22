@@ -117,6 +117,16 @@ func LoginUI(brg *bridge.Bridge) {
 func ChatUI(brg *bridge.Bridge) {
 	state := brg.GetInterfaceState()
 
+	messages, _ := brg.GetPastMessages(&state.CurChannel, 100)
+	for i := len(messages) - 1; i >= 0; i-- {
+		post := &post{}
+		post.username = messages[i].User.UserName
+		post.message = messages[i].Msg
+		post.time = messages[i].Timestamp.Format("15:04")
+
+		posts = append(posts, *post)
+	}
+
 	t := tui.NewTheme()
 	normal := tui.Style{Bg: tui.ColorWhite, Fg: tui.ColorBlack}
 	t.SetStyle("normal", normal)

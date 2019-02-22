@@ -51,6 +51,13 @@ func (b *Bridge) Login(credentials *models.UserCredentials) error {
 	return nil
 }
 
+func (b *Bridge) GetPastMessages(channel *models.Channel, amt int) ([]models.Message, error) {
+	page := &models.Pagination{}
+	page.Count = amt
+
+	return b.Client.GetMessages(channel, page)
+}
+
 func (b *Bridge) StreamMessages(channel *models.Channel) (chan models.Message, error) {
 	msgCh := make(chan models.Message, 100) // just an arbitrary buffer size
 	err := b.RealtimeClient.SubscribeToMessageStream(channel, msgCh)
