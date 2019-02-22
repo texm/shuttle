@@ -362,6 +362,11 @@ func RefreshChat(historyScroll *tui.ScrollArea, brg *bridge.Bridge, channelName 
 	updateChatPane(historyScroll, messages)
 }
 
+func RealtimeRefreshChat(historyScroll *tui.ScrollArea, brg *bridge.Bridge, messageChannel chan models.Message) {
+	message := <-messageChannel
+	appendChatPane(historyScroll, message)
+}
+
 func updateChatPane(historyScroll *tui.ScrollArea, messages []models.Message) {
 	if len(messages) == 0 {
 		return
@@ -389,6 +394,24 @@ func updateChatPane(historyScroll *tui.ScrollArea, messages []models.Message) {
 	}
 	historyScroll.Widget = history
 }
+
+// func appendChatPane(historyScroll *tui.ScrollArea, message models.Message) {
+
+// 	post := &post{}
+// 	post.username = message.User.UserName
+// 	post.message = message.Msg
+// 	post.time = message.Timestamp.Format("15:04")
+
+// 	history := &historyScroll.Widget
+// 	var vbox *tui.Box
+// 	vbox = history.(tui.NewVBox)
+// 	historyScroll.Widget.Append(tui.NewHBox(
+// 		tui.NewLabel(post.time),
+// 		tui.NewPadder(1, 0, tui.NewLabel(fmt.Sprintf("<%s>", post.username))),
+// 		tui.NewLabel(post.message),
+// 		tui.NewSpacer(),
+// 	))
+// }
 
 func KeepRefreshChat(historyScroll *tui.ScrollArea, brg *bridge.Bridge, channelName string) {
 	for {
