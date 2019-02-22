@@ -12,11 +12,11 @@ func main() {
 	noUIptr := flag.Bool("noui", false, "use UI or command")
 	flag.Parse()
 
-	brigeObj := bridge.Init()
+	bridgeObj := bridge.Init()
 
 	if *noUIptr {
-		cmd.Main(brigeObj)
+		cmd.Main(bridgeObj)
 	} else {
-		ui.Main()
+		ui.Main(bridgeObj)
 	}
 }

@@ -9,6 +9,7 @@ import (
 
 type Bridge struct {
 	Client *rest.Client
+	IsLoggedIn bool
 }
 
 func Init() *Bridge {
