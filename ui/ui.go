@@ -4,7 +4,7 @@ import (
 	"log"
 	"fmt"
 	"time"
-	//"net/url"
+	"net/url"
 
 	//"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/marcusolsson/tui-go"
@@ -29,6 +29,8 @@ type post struct {
 }
 
 var posts = []post{
+	{username: "john", message: "hi, what's up?", time: "14:41"},
+	{username: "jane", message: "not much", time: "14:43"},
 }
 
 var logo = `
@@ -60,12 +62,10 @@ func LoginUI(brg *bridge.Bridge) {
 	form.AppendRow(userId, authToken)
 
 	loginButton := tui.NewButton("Start Chatting")
-	googleButton := tui.NewButton("Login With Google")
 
 	buttons := tui.NewHBox(
 		tui.NewSpacer(),
 		tui.NewPadder(1, 0, loginButton),
-		tui.NewPadder(2, 0, googleButton),
 	)
 
 	mainMenu := tui.NewVBox(
@@ -111,12 +111,8 @@ func LoginUI(brg *bridge.Bridge) {
 }
 
 func ChatUI(brg *bridge.Bridge) {
-	// channels := [...]models.Channel{
-	// 	models.Channel{Name: "just a channel"},
-	// 	models.Channel{Name: "another channel"},
-	// }
-
-	channelsResponse, err := brg.GetChannels()
+	// SET UP SIDEBAR
+	channelsResponse, _ := brg.GetJoinedChannels(url.Values{})
 
 	sidebar := tui.NewVBox()
 	sidebar.Append(tui.NewHBox(tui.NewLabel("CHANNELS")))
@@ -129,17 +125,6 @@ func ChatUI(brg *bridge.Bridge) {
 		fmt.Println(err)
 	}
 
-	// sidebar := tui.NewVBox(
-	// 	tui.NewLabel("CHANNELS"),
-	// 	tui.NewLabel("general"),
-	// 	tui.NewLabel("random"),
-	// 	tui.NewLabel(""),
-	// 	tui.NewLabel("DIRECT MESSAGES"),
-	// 	tui.NewLabel("slackbot"),
-	// 	tui.NewSpacer(),
-	// )
-
-	//sidebar.SetBorder(true)
 	sidebarScroll := tui.NewScrollArea(sidebar)
 	sidebarBox := tui.NewVBox(sidebarScroll)
 	sidebarBox.SetBorder(true)
@@ -193,5 +178,5 @@ func ChatUI(brg *bridge.Bridge) {
 
 	if err := ui.Run(); err != nil {
 		log.Fatal(err)
-}
+	}
 }
