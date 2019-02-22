@@ -21,10 +21,11 @@ func Init() *Bridge {
 	client := rest.NewClient(url, false)
 
 	// google oauth
-	userID := "DETgMpoxPtE22Ap7Y"
-	authToken  := "9QLabFKs_-gVTqOeaso6PbsskWmsuxY2yXA6AL-d_Kx"
+	auth := &models.UserCredentials{}
 
-	auth := &models.UserCredentials{ID: userID, Token: authToken}
+	auth.ID = "DETgMpoxPtE22Ap7Y"
+	auth.Token = "9QLabFKs_-gVTqOeaso6PbsskWmsuxY2yXA6AL-d_Kx"
+
 	err = client.Login(auth)
 	if (err != nil) {
 		// this should never fail?

@@ -27,7 +27,7 @@ func Main(brg *bridge.Bridge) {
 	}
 
 	err = brg.SendMessage("test", testChan)
-	if (err == nil) {
+	if (err != nil) {
 		fmt.Println(err)
 	}
 }
