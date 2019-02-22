@@ -2,13 +2,16 @@ package main
 
 import "flag"
 
+import "./cmd"
+import "./ui"
+
 func main() {
 	noUIptr := flag.Bool("noui", false, "use UI or command")
 	flag.Parse()
 
 	if (*noUIptr) {
-		cmd_main()
+		cmd.Main()
 	} else {
-		ui_main()
+		ui.Main()
 	}
 }
