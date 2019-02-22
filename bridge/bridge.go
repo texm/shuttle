@@ -2,6 +2,6 @@ package bridge
 
 import "fmt"
 
-func Test() {
+func Init() {
 	fmt.Println("bridge!")
 } 
