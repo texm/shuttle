@@ -47,7 +47,6 @@ func Main(brg *bridge.Bridge) {
 }
 
 func LoginUI(brg *bridge.Bridge) {
-
 	authToken := tui.NewEntry()
 
 	userId := tui.NewEntry()

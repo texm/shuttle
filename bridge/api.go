@@ -3,11 +3,8 @@ package bridge
 import (
 	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
+	"github.com/texm/shuttle/auth"
 	"net/url"
-	"os"
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 )
 
 func (b *Bridge) SendMessage(msg string, channel *models.Channel) error {
@@ -37,43 +34,26 @@ func (b *Bridge) Search(params url.Values) (*models.Spotlight, error) {
 	return b.Client.GetSpotlight(params)
 }
 
-func (b *Bridge) Login(c *rest.Client) error {
-	credential, _ := ReadSavedCredential()
-	_ = c.LoginViaGoogle(&credential)
-	SaveCredential(&credential)
-	return nil
-}
-
-func ReadSavedCredential() (models.UserCredentials, error) {
-	pwd, _ := os.Getwd()
-	fmt.Println(pwd + "/.credential")
-	data, err := ioutil.ReadFile(pwd + "/.credential")
-	fmt.Println(data)
-	fmt.Println(err)
-	if err != nil {
-		return models.UserCredentials{}, err
+func (b *Bridge) Login(credentials *models.UserCredentials) error {
+	client := rest.NewClient(&b.ServerURL, false)
+	err := client.Login(credentials)
+	if (err != nil) {
+		return err
 	}
 
-	dat := models.UserCredentials{}
-	json.Unmarshal(data, &dat)
-	return models.UserCredentials{ID: dat.ID, Token: dat.Token}, nil
-}
+	b.IsLoggedIn = true
+	b.Client = client
 
-func SaveCredential(credentials *models.UserCredentials) error {
-	pwd, _ := os.Getwd()
-	se, _ := json.Marshal(credentials)
-	err := ioutil.WriteFile(pwd+"/.credential", se, 0644)
-	return err
-}
-
-func AppLogin(c *rest.Client) error {
-	credential, _ := ReadSavedCredential()
-	fmt.Println("===========================")
-	fmt.Println(credential)
-	fmt.Println("===========================")
-	_ = c.LoginViaGoogle(&credential)
-	SaveCredential(&credential)
 	return nil
+}
+
+func (b *Bridge) LoginWithGoogle() error {
+	credentials, err := auth.RetrieveCredentialsThroughOAuth(b.Client)
+	if (err != nil) {
+		return err
+	}
+
+	return b.Login(credentials)
 }
 
 func (b *Bridge) SetCredentials(userID string, authToken string) error {
