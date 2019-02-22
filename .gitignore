@@ -2,3 +2,4 @@
 .*~
 shuttle
 go.sum
+.DS_Store
