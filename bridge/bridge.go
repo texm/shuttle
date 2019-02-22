@@ -3,6 +3,7 @@ package bridge
 import (
 	"fmt"
 	"log"
+	"io/ioutil"
 	"net/url"
 
 	"github.com/Billz95/Rocket.Chat.Go.SDK/realtime"
@@ -25,13 +26,14 @@ func Init() *Bridge {
 		log.Fatalf("bad server url: %s", err)
 	}
 	brg.Client = rest.NewClient(url, false)
+
+	log.SetOutput(ioutil.Discard)
 	brg.RealtimeClient, err = realtime.NewClient(url, false)
 	if err != nil {
 		log.Fatalf("couldn't make new realtime client: %s", err)
 	}
 	credentials, err := auth.ReadSavedCredentials()
 	if err != nil {
-		fmt.Printf("failed to read credentials: %s\n", err)
 		return brg
 	}
 	err = brg.Login(credentials)
