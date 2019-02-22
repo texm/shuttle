@@ -3,13 +3,13 @@ package bridge
 import (
 	"log"
 	"net/url"
+	"fmt"
 
 	"github.com/texm/shuttle/auth"
 	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
 )
 
 type Bridge struct {
-	ServerURL url.URL
 	Client *rest.Client
 	IsLoggedIn bool
 }
@@ -21,11 +21,17 @@ func Init() *Bridge {
 	if err != nil {
 		log.Fatalf("bad server url: %s", err)
 	}
-	brg.ServerURL = *url
+	brg.Client = rest.NewClient(url, false)
 
 	credentials, err := auth.ReadSavedCredentials()
-	if (err == nil) {
-		err = brg.Login(credentials)
+	if (err != nil) {
+		fmt.Println("failed to read credentials")
+		return brg
+	}
+
+	err = brg.Login(credentials)
+	if (err != nil) {
+		fmt.Println("failed to login")
 	}
 
 	return brg

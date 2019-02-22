@@ -19,8 +19,13 @@ func ReadSavedCredentials() (*models.UserCredentials, error) {
 		return credentials, err
 	}
 
-	json.Unmarshal(data, &credentials)
-	if (credentials.ID != "" && credentials.Token != "") {
+	credData := map[string]string{}
+	json.Unmarshal(data, &credData)
+
+	credentials.ID 	  = credData["id"]
+	credentials.Token = credData["token"]
+
+	if (credentials.ID == "" || credentials.Token == "") {
 		return credentials, errors.New("failed to read tokens")
 	}
 

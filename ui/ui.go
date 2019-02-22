@@ -2,6 +2,7 @@ package ui
 
 import (
 	"log"
+	"fmt"
 
 	"github.com/marcusolsson/tui-go"
 	"github.com/texm/shuttle/bridge"
@@ -40,7 +41,7 @@ var logo = `
 
 func Main(brg *bridge.Bridge) {
 	if (brg.IsLoggedIn) {
-		
+		fmt.Println("logged in!")
 	} else {
 		LoginUI(brg)
 	}
@@ -57,10 +58,12 @@ func LoginUI(brg *bridge.Bridge) {
 	form.AppendRow(userId, authToken)
 
 	loginButton := tui.NewButton("Start Chatting")
+	googleButton := tui.NewButton("Login With Google")
 
 	buttons := tui.NewHBox(
 		tui.NewSpacer(),
 		tui.NewPadder(1, 0, loginButton),
+		tui.NewPadder(2, 0, googleButton),
 	)
 
 	mainMenu := tui.NewVBox(
@@ -92,7 +95,14 @@ func LoginUI(brg *bridge.Bridge) {
 		}
 	})
 
-	tui.DefaultFocusChain.Set(userId, authToken, loginButton)
+	googleButton.OnActivated(func(b *tui.Button) {
+		err := brg.LoginWithGoogle()
+		if (err == nil) {
+			ui.Quit()
+		}
+	})
+
+	tui.DefaultFocusChain.Set(userId, authToken, loginButton, googleButton)
 	ui.SetKeybinding("Esc", func() { ui.Quit() })
 
 	if err := ui.Run(); err != nil {

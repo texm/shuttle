@@ -35,14 +35,12 @@ func (b *Bridge) Search(params url.Values) (*models.Spotlight, error) {
 }
 
 func (b *Bridge) Login(credentials *models.UserCredentials) error {
-	client := rest.NewClient(&b.ServerURL, false)
-	err := client.Login(credentials)
+	err := b.Client.Login(credentials)
 	if (err != nil) {
 		return err
 	}
 
 	b.IsLoggedIn = true
-	b.Client = client
 
 	return nil
 }
