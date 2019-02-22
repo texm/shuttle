@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"time"
 
-	//"github.com/Billz95/Rocket.Chat.Go.SDK/models"
+	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/marcusolsson/tui-go"
 	"github.com/texm/shuttle/bridge"
 )
@@ -359,6 +359,10 @@ func ChangeChSelected(l *tui.List, delta int) {
 func RefreshChat(historyScroll *tui.ScrollArea, brg *bridge.Bridge, channelName string) {
 
 	messages, _ := brg.GetPastMessagesByName(channelName, 200)
+	updateChatPane(historyScroll, messages)
+}
+
+func updateChatPane(historyScroll *tui.ScrollArea, messages []models.Message) {
 	if len(messages) == 0 {
 		return
 	}
