@@ -3,8 +3,8 @@ package bridge
 import (
 	"fmt"
 	// "io/ioutil"
-	"log"
 	"io/ioutil"
+	"log"
 	"net/url"
 
 	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
@@ -32,8 +32,6 @@ type Bridge struct {
 	IsLoggedIn     bool
 	uiState        InterfaceState
 	ServerURL      url.URL
-	IsLoggedIn     bool
-	Client         *rest.Client
 	RealtimeClient *realtime.Client
 }
 
