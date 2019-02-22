@@ -106,30 +106,14 @@ func LoginUI(brg *bridge.Bridge) {
 }
 
 func ChatUI(brg *bridge.Bridge) {
-	// channels := [...]models.Channel{
-	// 	models.Channel{Name: "just a channel"},
-	// 	models.Channel{Name: "another channel"},
-	// }
-
+	// SET UP SIDEBAR
 	channelsResponse, _ := brg.GetJoinedChannels(url.Values{})
-
 	sidebar := tui.NewVBox()
 	sidebar.Append(tui.NewHBox(tui.NewLabel("CHANNELS")))
 	for _, c := range channelsResponse.Channels {
 		sidebar.Append(tui.NewHBox(tui.NewLabel(c.Name)))
 	}
 
-	// sidebar := tui.NewVBox(
-	// 	tui.NewLabel("CHANNELS"),
-	// 	tui.NewLabel("general"),
-	// 	tui.NewLabel("random"),
-	// 	tui.NewLabel(""),
-	// 	tui.NewLabel("DIRECT MESSAGES"),
-	// 	tui.NewLabel("slackbot"),
-	// 	tui.NewSpacer(),
-	// )
-
-	//sidebar.SetBorder(true)
 	sidebarScroll := tui.NewScrollArea(sidebar)
 	sidebarBox := tui.NewVBox(sidebarScroll)
 	sidebarBox.SetBorder(true)
