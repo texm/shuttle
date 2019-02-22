@@ -1,10 +1,12 @@
 package main
 
-import "flag"
+import (
+	"flag"
 
-import "./bridge"
-import "./cmd"
-import "./ui"
+	"github.com/texm/shuttle/bridge"
+	"github.com/texm/shuttle/cmd"
+	"github.com/texm/shuttle/ui"
+)
 
 func main() {
 	noUIptr := flag.Bool("noui", false, "use UI or command")
