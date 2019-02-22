@@ -41,6 +41,7 @@ func (b *Bridge) Login(c *rest.Client) error {
 	credential, _ := ReadSavedCredential()
 	_ = c.LoginViaGoogle(&credential)
 	SaveCredential(&credential)
+	b.IsLoggedIn = true
 	return nil
 }
 
