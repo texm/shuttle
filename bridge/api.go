@@ -3,7 +3,7 @@ package bridge
 import (
 	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
-
+	"github.com/texm/shuttle/auth"
 	"net/url"
 )
 
@@ -32,4 +32,11 @@ func (b *Bridge) GetJoinedChannels(params url.Values) (*rest.ChannelsResponse, e
 func (b *Bridge) Search(params url.Values) (*models.Spotlight, error) {
 	// cache
 	return b.Client.GetSpotlight(params)
+}
+
+func (b *Bridge) AppLogin(c *rest.Client) error {
+	credential, _ := auth.ReadSavedCredential()
+	_ = c.LoginViaGoogle(&credential)
+	auth.SaveCredential(&credential)
+	return nil
 }

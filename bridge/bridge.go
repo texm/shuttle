@@ -1,7 +1,7 @@
 package bridge
 
 import (
-	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
+	// "github.com/Billz95/Rocket.Chat.Go.SDK/models"
 	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
 	"net/url"
 )
@@ -19,18 +19,20 @@ func Init() *Bridge {
 	}
 
 	client := rest.NewClient(url, false)
+	err = brg.AppLogin(client)
+	return brg
 
 	// google oauth
-	userID := "DETgMpoxPtE22Ap7Y"
-	authToken := "9QLabFKs_-gVTqOeaso6PbsskWmsuxY2yXA6AL-d_Kx"
+	// userID := "DETgMpoxPtE22Ap7Y"
+	// authToken := "9QLabFKs_-gVTqOeaso6PbsskWmsuxY2yXA6AL-d_Kx"
 
-	auth := &models.UserCredentials{ID: userID, Token: authToken}
-	err = client.Login(auth)
-	if err != nil {
-		// this should never fail?
-	}
+	// auth := &models.UserCredentials{ID: userID, Token: authToken}
+	// err = brg.AppLogin(client)
+	// if err != nil {
+	// 	// this should never fail?
+	// }
 
-	brg.Client = client
+	// brg.Client = client
 
-	return brg
+	// return brg
 }
