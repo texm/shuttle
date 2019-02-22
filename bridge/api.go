@@ -1,13 +1,13 @@
 package bridge
 
 import (
-	"github.com/RocketChat/Rocket.Chat.Go.SDK/rest"
-	"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
+	"github.com/Billz95/Rocket.Chat.Go.SDK/models"
+	"github.com/Billz95/Rocket.Chat.Go.SDK/rest"
 
 	"net/url"
 )
 
-func (b *Bridge) SendMessage(msg string, channel *models.Channel) (error) {
+func (b *Bridge) SendMessage(msg string, channel *models.Channel) error {
 	// send`
 
 	return b.Client.Send(channel, msg)
