@@ -10,7 +10,7 @@ type Bridge struct {
 	Client *rest.Client
 }
 
-func Init(userID string, authToken string) *Bridge {
+func Init() *Bridge {
 	brg := &Bridge{}
 
 	url, err := url.Parse("https://chat.tools-stg.flnltd.com")
@@ -19,6 +19,10 @@ func Init(userID string, authToken string) *Bridge {
 	}
 	
 	client := rest.NewClient(url, false)
+
+	// google oauth
+	userID := "DETgMpoxPtE22Ap7Y"
+	authToken  := "9QLabFKs_-gVTqOeaso6PbsskWmsuxY2yXA6AL-d_Kx"
 
 	auth := &models.UserCredentials{ID: userID, Token: authToken}
 	err = client.Login(auth)

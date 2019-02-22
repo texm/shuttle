@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/texm/shuttle/bridge"
+	"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
 	"fmt"
 )
 
@@ -12,8 +13,21 @@ func Main(brg *bridge.Bridge) {
 		return
 	}
 
-	fmt.Println("channels:\n")
+	var testChan *models.Channel
 	for i := 0; i < len(channels.Channels); i++ {
-		fmt.Println(channels.Channels[i].Name)
+		if (channels.Channels[i].Name == "shuttle-test") {
+			testChan = &channels.Channels[i]
+			break
+		}
+	}
+
+	if (testChan == nil) {
+		fmt.Println("not found")
+		return
+	}
+
+	err = brg.SendMessage("test", testChan)
+	if (err == nil) {
+		fmt.Println(err)
 	}
 }

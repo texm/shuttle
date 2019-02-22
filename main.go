@@ -12,10 +12,7 @@ func main() {
 	noUIptr := flag.Bool("noui", false, "use UI or command")
 	flag.Parse()
 	
-	userID := ""
-	token  := ""
-	
-	brigeObj := bridge.Init(userID, token)
+	brigeObj := bridge.Init()
 
 	if (*noUIptr) {
 		cmd.Main(brigeObj)
